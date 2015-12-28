@@ -56,4 +56,17 @@ class MatchTest < ActiveSupport::TestCase
     assert_equal(@match.winner.id, 2, "Match's winner should be player two")
     assert_equal(@match.loser.id, 1, "Match's loser should be player one")
   end
+
+  test "should correct stats when winner changes" do
+    @match.save
+
+    @match.games.first.assign_attributes(player1_score: 0, player2_score: 11)
+    @match.games.push(Game.new(player1_id: 1, player2_id: 2, player1_score: 0, player2_score: 11))
+
+    object = mock()
+    object.expects(:update_stats_for_match_with_new_winner)
+    StatService.stubs(:new).with(@match).returns(object)
+
+    @match.save
+  end
 end

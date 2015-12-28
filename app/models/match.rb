@@ -1,4 +1,7 @@
 class Match < ActiveRecord::Base
+  after_find :store_existing_winner
+  before_create :update_stats
+  before_update :correct_stats
 
   @winning_player = nil
   @losing_player = nil
@@ -20,16 +23,12 @@ class Match < ActiveRecord::Base
   end
 
   def winner
-    if @winning_player.nil?
-      determine_winner
-    end
+    determine_winner
     @winning_player
   end
 
   def loser
-    if @losing_player.nil?
-      determine_winner
-    end
+    determine_winner
     @losing_player
   end
 
@@ -84,5 +83,22 @@ class Match < ActiveRecord::Base
   def has_winner
     get_games_won
     @player1_games_won != @player2_games_won
+  end
+
+  def store_existing_winner
+    @existing_winner = self.winner
+  end
+
+  # Update win/loss stats for the match's players
+  def update_stats
+    StatService.new(self).update_stats
+  end
+
+  # If the match's winner/loser have changed, we need to retroactively update
+  # their stats
+  def correct_stats
+    if self.winner != @existing_winner
+      StatService.new(self).update_stats_for_match_with_new_winner
+    end
   end
 end
