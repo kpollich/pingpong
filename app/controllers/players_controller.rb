@@ -34,6 +34,13 @@ class PlayersController < ApplicationController
 
   def destroy
     player = Player.find(params[:id])
+    history = PlayerHistory.from_player(player)
+
+    # Delete each match/game in this player's history
+    history.each do |match|
+      StatService.new(match).update_stats_for_deleted_match
+      match.destroy
+    end
     player.destroy
 
     flash[:success] = "Player '#{player.name}' deleted!"
