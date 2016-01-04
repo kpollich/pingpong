@@ -14,14 +14,14 @@ class MatchTest < ActiveSupport::TestCase
   end
 
   test "should have player one" do
-    assert(@match.player1.id = 1)
+    assert_equal(@match.player1.id, 1)
   end
 
   test "should have player two" do
-    assert(@match.player2.id = 2)
+    assert_equal(@match.player2.id, 2)
   end
 
-  test "should have no winner" do
+  test "should have no winner at 1-1" do
     @match.games.first.player1_score = 0
     @match.games.first.player2_score = 11
 
@@ -31,8 +31,8 @@ class MatchTest < ActiveSupport::TestCase
       "Should provide error message for lack of winner")
   end
 
-  test "should have two or three games" do
-    @match.games = [Game.new(player1_id: 1, player2_id: 2, player1_score: 11, player2_score: 0)]
+  test "should not save with one game" do
+    @match.games.delete(@match.games.first)
 
     # Match only has one game played, should throw an error
     assert_not(@match.save, "Should not save")
@@ -40,11 +40,20 @@ class MatchTest < ActiveSupport::TestCase
       "Should provide error message - not enough games played.")
   end
 
-  test "should have winner and loser" do
+  test "should have winner and loser at 2-0" do
 
     # Player One wins 2-0 in our setup method
-    assert(@match.errors.none?, "There should be errors")
-    assert_equal(@match.winner.id, 1, "Match's winner should be player one'")
+    assert(@match.save, "Should save")
+    assert_equal(@match.winner.id, 1, "Match's winner should be player one")
     assert_equal(@match.loser.id, 2, "Match's loser should be player two")
+  end
+
+  test "should have winner and loser at 2-1" do
+    @match.games.first.assign_attributes(player1_score: 0, player2_score: 11)
+    @match.games.push(Game.new(player1_id: 1, player2_id: 2, player1_score: 0, player2_score: 11))
+
+    assert(@match.save, "Should save")
+    assert_equal(@match.winner.id, 2, "Match's winner should be player two")
+    assert_equal(@match.loser.id, 1, "Match's loser should be player one")
   end
 end

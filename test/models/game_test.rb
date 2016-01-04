@@ -19,7 +19,8 @@ class GameTest < ActiveSupport::TestCase
 
     # Game doesn't have a score for player 1
     assert_not(@game.save, "Should not save game")
-    assert(@game.errors[:player1_score].any? ,"Should be errors")
+    assert(@game.errors[:player1_score].include?("can't be blank"),
+      "Should provide error message for player1 score")
   end
 
   test "should require score for player2" do
@@ -27,7 +28,8 @@ class GameTest < ActiveSupport::TestCase
 
     # Game doesn't have a score for player 2
     assert_not(@game.save, "Should not save game")
-    assert(@game.errors[:player2_score].any?, "Should be errors")
+    assert(@game.errors[:player2_score].include?("can't be blank"),
+      "Should provide error message for player2 score")
   end
 
   test "should have a player with 11 points" do
@@ -57,5 +59,16 @@ class GameTest < ActiveSupport::TestCase
     assert_not(@game.save, "Should not save game")
     assert_equal(@game.errors[:score], ["must be won by exactly two points in overtime."],
       "Should provide error message for score")
+  end
+
+  test "should save valid game" do
+    assert(@game.save, "Should save game")
+  end
+
+  test "should save valid overtime game" do
+    @game.player1_score = 14
+    @game.player2_score = 12
+
+    assert(@game.save, "Should save game")
   end
 end
