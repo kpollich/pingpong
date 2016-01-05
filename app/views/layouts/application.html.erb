@@ -12,6 +12,13 @@
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
+<% if current_user %>
+  <p>Logged in as <%= current_user.name.titleize %></p>
+<% else %>
+  <p><%= link_to "Log In", sign_in_path %></p>
+<% end %>
+<p><%= link_to "Logout", logout_path %></p>
+
 <%= yield %>
 
 </body>
