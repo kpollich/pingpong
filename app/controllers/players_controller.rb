@@ -57,14 +57,15 @@ class PlayersController < ApplicationController
       session[:player_id] = player.id
       redirect_to '/'
     else
-      flash[:error] = "Incorrect credentials"
-      redirect_to '/'
+      flash.now[:error] = "Incorrect credentials"
+      @player = Player.new(name: player_params[:name])
+      render :sign_in
     end
   end
 
   def logout
-    session[:player_id] = nil
-    flash[:succes] = "Successfully logged out!"
+    session.destroy
+    flash[:success] = "Successfully logged out!"
     redirect_to "/"
   end
 
