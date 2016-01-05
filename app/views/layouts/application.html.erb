@@ -15,7 +15,7 @@
 <% if current_user %>
   <p>Logged in as <%= current_user.name %> (<%= link_to "Logout", logout_path %>)</p>
 <% else %>
-  <p><%= link_to "Log In", sign_in_path %></p>
+  <%= render "shared/sign_in" %>
 <% end %>
 
 <%= yield %>

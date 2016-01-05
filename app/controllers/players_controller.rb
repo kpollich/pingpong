@@ -57,9 +57,9 @@ class PlayersController < ApplicationController
       session[:player_id] = player.id
       redirect_to '/'
     else
-      flash.now[:error] = "Incorrect credentials"
+      flash[:error] = "Incorrect credentials"
       @player = Player.new(name: player_params[:name])
-      render :sign_in
+      redirect_to '/'
     end
   end
 
