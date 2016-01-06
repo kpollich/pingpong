@@ -2,9 +2,9 @@
   <%= render partial: 'shared/errors', object: @match, locals: { model: "match" } %>
 
   <label>Players: </label>
-  <%= f.collection_select(:player1_id, Player.all, :id, :name, {:include_blank => true}) %>
+  <%= f.collection_select(:player1_id, Player.find_all, :id, :name, {:include_blank => true}) %>
   vs.
-  <%= f.collection_select(:player2_id, Player.all, :id, :name, {:include_blank => true}) %>
+  <%= f.collection_select(:player2_id, Player.find_all, :id, :name, {:include_blank => true}) %>
 
   <% @match.games.each_with_index do |game, index| %>
     <%= f.fields_for :games, game do |game_field| %>

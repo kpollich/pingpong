@@ -21,7 +21,6 @@ class MatchesController < ApplicationController
     normalize_games
 
     if @match.save
-      StatService.new(@match).update_stats
       flash[:success] = "Match created!"
       redirect_to matches_path
     else

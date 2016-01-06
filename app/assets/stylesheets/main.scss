@@ -63,3 +63,15 @@ input[type=submit] {
     opacity: 0.3;
   }
 }
+
+.dvLogin {
+  width: 20%;
+  label {
+    width: 3.5em;
+  }
+  input[type=submit] {
+    width: 40%;
+    font-size: 1em;
+    margin: auto auto;
+  }
+}

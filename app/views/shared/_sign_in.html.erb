@@ -1,10 +1,12 @@
 <div class="dvLogin">
   <%= form_for Player.new, :url => { :action => "login", :controller => "players" } do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+  <fieldset>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
 
-    <%= f.submit "Log In" %>
+      <%= f.submit "Log In" %>
   <% end %>
+  </fieldset>
 </div>
