@@ -13,6 +13,7 @@ class Match < ActiveRecord::Base
   validates :player2_id, presence: true
   validate :validate_game_count
   validate :validate_winner
+  validate :validate_players_are_different
 
   def player1
     Player.find(self.player1_id)
@@ -41,6 +42,12 @@ class Match < ActiveRecord::Base
   def validate_winner
     if !has_winner
       errors.add(:base, "Match does not have a winner. A player must win 2 out of 3 games.")
+    end
+  end
+
+  def validate_players_are_different
+    if self.player1 == self.player2
+      errors.add(:player2_id, "must be a different player than Player1")
     end
   end
 

@@ -26,14 +26,6 @@ fieldset {
     width: 15em;
     margin-bottom: 0.5em;
   }
-
-  .field_with_errors {
-    display: inline;
-
-    input {
-      background-color: #faa;
-    }
-  }
 }
 
 input[type=submit] {
@@ -75,3 +67,11 @@ input[type=submit] {
     margin: auto auto;
   }
 }
+
+ .field_with_errors {
+    display: inline;
+
+    input, select {
+      background-color: #faa;
+    }
+  }
