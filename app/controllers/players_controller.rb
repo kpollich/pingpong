@@ -47,17 +47,13 @@ class PlayersController < ApplicationController
     redirect_to players_path
   end
 
-  def sign_in
-    @player = Player.new
-  end
-
   def login
     player = Player.find_by(name: player_params[:name])
     if player && player.authenticate(player_params[:password])
       session[:player_id] = player.id
       redirect_to '/'
     else
-      flash[:error] = "Incorrect credentials"
+      flash[:error] = "Invalid credentials, try again."
       @player = Player.new(name: player_params[:name])
       redirect_to '/'
     end

@@ -3,15 +3,23 @@
 player_one:
   id: 1
   name: Player One
+  password_digest:  <%= BCrypt::Password.create("password", cost: 4) %>
+  is_admin: false
 
 player_two:
   id: 2
   name: Player Two
+  password_digest:  <%= BCrypt::Password.create("password", cost: 4) %>
+  is_admin: false
 
 player_three:
   id: 3
   name: Player Three
+  password_digest:  <%= BCrypt::Password.create("password", cost: 4) %>
+  is_admin: false
 
 player_four:
   id: 4
   name: Player Four
+  password_digest:  <%= BCrypt::Password.create("password", cost: 4) %>
+  is_admin: false

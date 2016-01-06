@@ -22,9 +22,28 @@ class PlayersControllerTest < ActionController::TestCase
 
   test "should create player" do
     assert_difference("Player.count") do
-      post :create, player: {name: "New Player"}
+      post :create, player: {
+        name: "New Player",
+        password: "password",
+        password_confirmation: "password"
+      }
     end
     assert_redirected_to players_path
+  end
+
+  test "should log in as player" do
+    Player.stubs(:find_by).returns(Player.first)
+    Player.any_instance.stubs(:authenticate).returns(true)
+
+    player = {
+        name: "New Player",
+        password: "password"
+      }
+
+    post :login, player: player
+
+    assert_response :redirect
+    assert_not(flash[:error], "Shouldn't be errors when logging in")
   end
 
 end
