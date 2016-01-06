@@ -12,6 +12,11 @@
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
+<div class="nav">
+  <%= link_to "View Players", players_path %>
+  <%= link_to "View Matches", matches_path %>
+</div>
+
 <% if current_user %>
   <p>Logged in as <%= current_user.name %> (<%= link_to "Logout", logout_path %>)</p>
 <% else %>
