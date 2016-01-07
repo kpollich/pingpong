@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   post 'login' => 'players#login'
   get 'logout' => 'players#logout'
 
-  scope 'api', module: 'api' do
+  namespace 'api' do
     jsonapi_resources :players
+    jsonapi_resources :matches
   end
 end
