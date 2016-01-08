@@ -6,4 +6,4 @@ players and view your overall record, as well as individual match/game statistic
 
 We also have a small REST API, accessible through the `/api`/ scope. All endpoints require basic
 authentication, so you'll need to create a player to authenticate to the API. This API complies with
-the [JSON API](http://jsonapi.org/) standard. See the wiki for more info.
+the [JSON API](http://jsonapi.org/) standard. See the [wiki](https://github.com/kpollich/pingpong/wiki/ClipperPong-API) for more info.
