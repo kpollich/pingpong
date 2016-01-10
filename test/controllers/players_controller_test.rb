@@ -28,6 +28,8 @@ class PlayersControllerTest < ActionController::TestCase
         password_confirmation: "password"
       }
     end
+    assert_equal(session[:player_id], Player.find_by(name: "New Player").id,
+      "New Player should be logged in after being created")
     assert_redirected_to players_path
   end
 

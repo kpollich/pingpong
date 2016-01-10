@@ -20,6 +20,9 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
     if @player.save
       flash[:success] = "Player '#{@player.name}' created!"
+
+      # Auto login the new player, unless there's already a player logged in
+      session[:player_id] = @player.id unless session[:player_id]
       redirect_to players_path
     else
       render 'new'
