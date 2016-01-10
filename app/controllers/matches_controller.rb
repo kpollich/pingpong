@@ -31,7 +31,6 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-
     @match.assign_attributes(match_params)
     normalize_games
 

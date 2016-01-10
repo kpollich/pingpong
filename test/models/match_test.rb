@@ -40,6 +40,15 @@ class MatchTest < ActiveSupport::TestCase
       "Should provide error message - not enough games played.")
   end
 
+  test "should not save with more than two wins" do
+    @match.games.push(Game.new(player1_id: 1, player2_id: 2, player1_score: 11, player2_score: 0))
+
+    # Match has 3 games in which player1 is the winner - this is an invalid win condition
+    assert_not(@match.save, "Should not save")
+    assert_equal(@match.errors["base"], ["A player cannot have more than two wins."],
+      "Should provide error message - too many wins.")
+  end
+
   test "should have winner and loser at 2-0" do
 
     # Player One wins 2-0 in our setup method

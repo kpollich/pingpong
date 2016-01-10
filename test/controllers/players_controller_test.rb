@@ -36,9 +36,9 @@ class PlayersControllerTest < ActionController::TestCase
     Player.any_instance.stubs(:authenticate).returns(true)
 
     player = {
-        name: "New Player",
-        password: "password"
-      }
+      name: "New Player",
+      password: "password"
+    }
 
     post :login, player: player
 

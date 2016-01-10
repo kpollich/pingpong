@@ -14,6 +14,7 @@ class Match < ActiveRecord::Base
   validate :validate_game_count
   validate :validate_winner
   validate :validate_players_are_different
+  validate :validate_no_more_than_two_wins
 
   def player1
     Player.find(self.player1_id)
@@ -48,6 +49,13 @@ class Match < ActiveRecord::Base
   def validate_players_are_different
     if self.player1 == self.player2
       errors.add(:player2_id, "must be a different player than Player1")
+    end
+  end
+
+  def validate_no_more_than_two_wins
+    get_games_won
+    if @player1_games_won > 2 || @player2_games_won > 2
+      errors.add(:base, "A player cannot have more than two wins.")
     end
   end
 
